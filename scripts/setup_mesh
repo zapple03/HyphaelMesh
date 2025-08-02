@@ -1,4 +1,5 @@
 #!/bin/bash
+
 LOG=/tmp/mesh_setup.log
 exec > "$LOG" 2>&1
 exec 2>&1
