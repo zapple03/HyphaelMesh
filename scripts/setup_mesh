@@ -1,0 +1,34 @@
+#!/bin/bash
+LOG=/tmp/mesh_setup.log
+exec > "$LOG" 2>&1
+exec 2>&1
+echo "[*] Starting mesh setup on $(date)"
+
+source ./detect_interfaces
+source ./generate_IPv6
+
+MESH_CONF="/etc/wpa_supplicant/meshnet.conf"
+
+echo "[*] Killing any existing wpa_supplicant..."
+sudo killall -q wpa_supplicant || true
+sudo rm -f /run/wpa_supplicant/$IFACE || true
+
+echo "[*] Setting $IFACE to mesh point mode..."
+sudo ip link set $IFACE down || echo "[!] Failed: ip link down"
+sudo iw $IFACE set type mp || echo "[!] Failed: iw set type mp"
+sudo ip link set $IFACE up || echo "[!] Failed: ip link up"
+
+echo "[*] Starting wpa_supplicant..."
+sudo wpa_supplicant -B -i $IFACE -c $MESH_CONF || echo "[!] Failed: wpa_supplicant"
+
+sleep 2
+
+echo "[*] Assigning IPv6 address: $IPV6"
+sudo ip -6 addr flush dev $IFACE
+sudo ip -6 addr add $IPV6 dev $IFACE || echo "[!] Failed: ip addr add"
+
+echo "[*] Starting Babel on $IFACE"
+sudo babeld $IFACE || echo "[!] Failed: babeld"
+
+echo "[+] Mesh setup complete!"
+

@@ -1,0 +1,14 @@
+[Unit]
+#Description=802.11s Mesh Setup and Babel Daemon
+#After=network.target
+
+[Service]
+#Type=oneshot
+#ExecStart=/usr/local/bin/setup_mesh
+#RemainAfterExit=true
+#StandardOutput=journal
+#StandardError=journal
+
+[Install]
+#WantedBy=multi-user.target
+
