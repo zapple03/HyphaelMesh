@@ -1,0 +1,15 @@
+!!MeshManagement Database
+  1) NodeList Table
+    # contains: 
+      ID (INT) (form: N) | nodeName (VARCHAR) (form: nN) | ULA (VARCHAR) (form: fdxx.xxxx.xxxx.N::/64)
+
+::LeaderFiles
+  1) New Node Manager Script (manage_newNode.py)
+    # Await a broadcast from existing nodes on the mesh over the designated socket informing the manager script that a new node has joined the network. 
+      -- Broadcast is sent from the Mesh Update script on the node that makes the initial handshake with the new node.
+      -- This broadcast contains the hostname of the new node along with the ip address it joined with. Its formatted as a 2 token string.
+    # Upon recieving a broadcast from a node, the broadcast is deconstructed and used to fill out a new entry in the NodeList table in the MeshManagement database.
+      -- A function takes the row count,increments it by 1, then assigns the new value as the ID, as well as assigning it as part of the nodeName (nN where N is the ID) and as the the Subnet ID for the ULA.
+  2)
+  3)
+

@@ -26,5 +26,5 @@ done
 if [ -n "$IFACE" ]; then
     echo "Best interface: $IFACE (metric $METRIC)"
 else
-    echo "No active wireless interface with a default route found."
+    echo "No active interface with a default route found."
 fi

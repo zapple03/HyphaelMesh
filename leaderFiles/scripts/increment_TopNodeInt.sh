@@ -2,8 +2,7 @@
 
 #!/bin/bash
 
+#pull previous node number from file
 OldTop=$(head ./configs/TopNodeInt.txt | awk '{print $2}')
-
-NewTop=$(($OldTop+1))
-#update stored value for number of nodes
-sed -i "s/$OldTop/$NewTop/" ./configs/TopNodeInt.txt
+#update stored value for node number
+sed -i "s/$OldTop/$(($OldTop+1))/" ./configs/TopNodeInt.txt
